@@ -20,9 +20,12 @@ function Attendance() {
     const onSearchHandler=()=>{
         const month=moment(selectedMonth).format('MM/YYYY');
         GlobalApi.getAttendanceList(selectedGrade, month).then(resp=>{
-            setAttendanceList(resp.data);
-            console.log(resp.data)
-        })
+                setAttendanceList(resp.data);
+                console.log("Attendance data:", resp.data);
+        }).catch(error => {
+            toast("Error fetching attendance data.");
+            console.error(error);
+        });
     }
     return (
         <div className='p-10'>

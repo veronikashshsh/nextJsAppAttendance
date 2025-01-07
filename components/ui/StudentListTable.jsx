@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-quartz.css";
 import { Button } from '@/components/ui/button';
 import { Search, Trash } from 'lucide-react';
 import {
@@ -87,7 +85,6 @@ const DeleteRecord=(id)=>{
           />
         </div>
         <AgGridReact
-          theme="legacy"
           rowData={rowData}
           columnDefs={colDefs}
           quickFilterText={searchInput}

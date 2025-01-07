@@ -24,6 +24,7 @@ export async function GET(req) {
 }
 
 export async function POST(req, res) {
+    try {
     const data = await req.json();
     const result = await db.insert(ATTENDANCE)
         .values({
@@ -31,9 +32,12 @@ export async function POST(req, res) {
             present: data.present,
             day: data.day,
             date: data.date
-        })
+        });
 
     return NextResponse.json(result);
+    } catch (error) {
+        return NextResponse.json({ error: 'Failed to insert attendance', details: error.message }, { status: 500 });
+    }
 }
 
 export async function DELETE(req) {
