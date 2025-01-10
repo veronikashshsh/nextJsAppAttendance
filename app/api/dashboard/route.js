@@ -12,9 +12,9 @@ export async function GET(req){
         day:ATTENDANCE.day,
         presentCount:sql`count(${ATTENDANCE.day})`
     }).from(ATTENDANCE)
-    .innerJoin(STUDENTS,and(eq(ATTENDANCE.studentId,STUDENTS.id), eq(ATTENDANCE.date,date)))
+    .innerJoin(STUDENTS,eq(ATTENDANCE.studentId,STUDENTS.id))
     .groupBy(ATTENDANCE.day)
-    .where(eq(STUDENTS.grade, grade))
+    .where(and(eq(ATTENDANCE.date,date), eq(STUDENTS.grade,grade)))
     .orderBy(desc(ATTENDANCE.day))
     .limit(7)
 

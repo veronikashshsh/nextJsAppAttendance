@@ -14,7 +14,15 @@ const MarkAttendance=(data)=>axios.post('/api/attendance', data);
 
 const MarkAbsent=(studentId,day,date)=>axios.delete('/api/attendance?studentId='+studentId+"&day="+day+"&date="+date);
 
-const TotalPresentCountByDay=(date,grade)=>axios.get('/api/dashboard?date='+date+"&grade="+grade);
+// adding objects
+
+const GetObjects=()=>axios.get('/api/object');
+
+const DeleteObjectRecord=(id)=>axios.delete('/api/object?id=' + id);
+
+
+
+//const GetTotalPresentCountByDay=(date,grade)=>axios.get('/api/attendance?date='+date+"&grade="+grade);
 
 export default{
     GetAllGrades,
@@ -24,5 +32,6 @@ export default{
     getAttendanceList,
     MarkAttendance,
     MarkAbsent,
-    TotalPresentCountByDay
+    GetObjects,
+    DeleteObjectRecord,
 }
