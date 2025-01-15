@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from 'react'
-import ObjectGrid from './_components/ObjectGrid'
+import AddNewObject from './_components/AddNewObject'
 import GlobalApi from '@/app/_services/GlobalApi';
 import ObjectListTable from '@/components/ui/ObjectListTable';
 
-function addNewObject() {
+function Object() {
   const [ObjectList, setObjectList] =useState([]);
   useEffect(()=>{
     GetAllObjects();
@@ -18,10 +18,12 @@ function addNewObject() {
 
 
   return (
-    <div>addObject
+    <div> <h2 className='font-bold text-2xl flex justify-between items-center'>addObject
+    <AddNewObject/>
+    </h2>
       <ObjectListTable objectList={ObjectList}/>
     </div>
   )
 }
 
-export default addNewObject
+export default Object

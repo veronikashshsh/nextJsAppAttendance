@@ -79,7 +79,7 @@ const DeleteRecord=(id)=>{
         className='ag-theme-quartz' style={{ height: 500 }}>
         <div className='p-2 rounded lg-border shadow-sm flex gap-2 mb-4 max-w-sm'>
           <Search />
-          <input type='text' placeholder='Searc on anything..'
+          <input type='text' placeholder='Search on anything..'
             className='outline-none w-full'
             onChange={(event) => setSearchInput(event.target.value)}
           />

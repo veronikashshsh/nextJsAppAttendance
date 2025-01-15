@@ -1,6 +1,61 @@
-import React from 'react'
+'use client';
+import { Button } from '@/components/ui/button';
+import React, { useEffect, useState } from 'react';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from '@/components/ui/input';
+import { useForm } from 'react-hook-form';
+import GlobalApi from '@/app/_services/GlobalApi';
+import { toast } from 'sonner';
+import { Loader2Icon } from 'lucide-react';
 
-function addNewObject() {
+
+function AddNewObject() {
+    const [open, setOpen] = useState(false);
+    const [objects, setObjects] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [loadingObjects, setLoadingObjects] = useState(false); 
+    const {
+            register,
+            handleSubmit,
+            reset,
+            formState: { errors },
+        } = useForm();
+
+    const GetAllObjects = async () => {
+            setLoadingObjects(true);
+            try {
+                const resp = await GlobalApi.GetObjects();
+                setObjects(resp.data);
+            } catch (error) {
+                toast.error("Failed to fetch grades");
+            } finally {
+                setLoadingObjects(false);
+            }
+        };
+
+         const onSubmit = async (data) => {
+                setLoading(true);
+                try {
+                    const resp = await GlobalApi.CreateNewObject(data);
+                    if (resp.data) {
+                        reset();
+                        refreshData();
+                        setOpen(false);
+                        toast('New Object Added');
+                    }
+                } catch (error) {
+                    toast.error("Failed to add new student");
+                } finally {
+                    setLoading(false);
+                }
+            };
+    
   return (
     <div>
             <Button onClick={() => setOpen(true)}>Добавити новий об'єкт</Button>
@@ -9,6 +64,9 @@ function addNewObject() {
                     <DialogHeader>
                         <DialogTitle>Добавити новий об'єкт</DialogTitle>
                     </DialogHeader>
+                    <DialogDescription id="dialog-description">
+        Заповніть форму нижче, щоб додати новий об'єкт.
+    </DialogDescription>
                     <div>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="py-3">
@@ -57,4 +115,4 @@ function addNewObject() {
   )
 }
 
-export default addNewObject
+export default AddNewObject

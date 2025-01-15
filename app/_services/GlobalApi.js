@@ -16,6 +16,8 @@ const MarkAbsent=(studentId,day,date)=>axios.delete('/api/attendance?studentId='
 
 // adding objects
 
+const AddObject=(data)=>axios.post('/api/object', data);
+
 const GetObjects=()=>axios.get('/api/object');
 
 const DeleteObjectRecord=(id)=>axios.delete('/api/object?id=' + id);
@@ -34,4 +36,5 @@ export default{
     MarkAbsent,
     GetObjects,
     DeleteObjectRecord,
+    AddObject
 }
