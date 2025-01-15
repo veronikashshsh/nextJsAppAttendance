@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from 'react';
 import Image from 'next/image';
-import { GraduationCap, Hand, LayoutIcon, Settings } from 'lucide-react';
+import { GraduationCap, Hand, HomeIcon, LayoutIcon, Settings } from 'lucide-react';
 import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
@@ -13,25 +13,31 @@ function SideNav() {  // Component name should start with a capital letter
     const menuList = [
         {
             id: 1, 
-            name: 'Dashboard', 
+            name: 'Головна сторінка', 
             icon: LayoutIcon, 
             path: '/dashboard',
         },
         {
             id: 2, 
-            name: 'Student', 
+            name: 'Робітники', 
             icon: GraduationCap, 
             path: '/dashboard/students',
         },
         {
             id: 3, 
-            name: 'Attendance', 
+            name: 'Відвідуваність', 
             icon: Hand, 
             path: '/dashboard/attendance',
         },
         {
             id: 4, 
-            name: 'Settings', 
+            name: "Добавити об'єкт", 
+            icon: HomeIcon, 
+            path: '/dashboard/addObject',
+        },
+        {
+            id: 5, 
+            name: 'Налаштування', 
             icon: Settings, 
             path: '/dashboard/settings',
         },

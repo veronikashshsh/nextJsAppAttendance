@@ -28,12 +28,6 @@ export default function ThemeSwitcher() {
       >
         Темна
         </Button>
-      <Button
-        onClick={() => setTheme("christmas")}
-        className={`px-4 py-2 ${theme === "christmas" ? "bg-red-200" : ""}`}
-      >
-        Новорічна
-        </Button>
     </div>
   );
 }

@@ -6,23 +6,22 @@ import GradeSelect from '../_components/GradeSelect'
 import moment from 'moment'
 import GlobalApi from '../_services/GlobalApi'
 import StatusList from './_components/StatusList'
-import BarChartComponent from './_components/BarChartComponent'
-import PieChartComponent from './_components/PieChartComponent'
-import ThemeSwitcher from './settings/_components/ThemeSwitcher'
 
 function Dashboard() {
   const { setTheme } = useTheme()
   const [selectedMonth, setSelectedMonth] = useState();
   const [selectedGrade, setSelectedGrade] = useState();
   const [attendanceList, setAttendanceList] = useState();
-  const [totalPresentData, setTotalPresentData] = useState([]);
 
   useEffect(() => {
-    setTheme('light');
-    GetTotalPresentCountByDay();
     getStudentAttendance();
-  }, [selectedMonth || selectedGrade])
+    //GetTotalPresentCountByDay();
+  }, [selectedMonth])
 
+  useEffect(()=> {
+    getStudentAttendance();
+    //GetTotalPresentCountByDay();
+  }, [selectedGrade])
 
 
   /**
@@ -32,16 +31,18 @@ function Dashboard() {
   const getStudentAttendance = () => {
     GlobalApi.getAttendanceList(selectedGrade, moment(selectedMonth).format('MM/yyyy'))
       .then(resp => {
+        console.log("Attendance Data:", resp.data);
         setAttendanceList(resp.data)
       })
   }
 
-  const GetTotalPresentCountByDay = () => {
-    GlobalApi.TotalPresentCountByDay(moment(selectedMonth).format('MM/yyyy'))
+  /*const GetTotalPresentCountByDay = () => {
+    GlobalApi.GetTotalPresentCountByDay(moment(selectedMonth).format('MM/yyyy'))
       .then(resp => {
         setTotalPresentData(resp.data)
+        console.log("Attendance Data111:", resp.data);
       })
-  }
+  }*/
 
   return (
     <div className='p-10'>
@@ -53,19 +54,10 @@ function Dashboard() {
           <GradeSelect selectedGrade={setSelectedGrade} />
         </div>
       </div>
-
       <StatusList attendanceList={attendanceList} />
-
-      <div className='grid grid-cols-1 md:grid-cols-3'>
-        <div>
-          <BarChartComponent attendanceList={attendanceList} 
-          totalPresentData={totalPresentData} />
-        </div>
-        <div>
-        </div>
       </div>
-    </div>
   )
 }
+
 
 export default Dashboard 

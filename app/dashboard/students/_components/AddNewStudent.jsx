@@ -87,15 +87,10 @@ function AddNewStudent({refreshData}) {
                                         className="p-3 border rounded-lg"
                                         {...register('grade', { required: "Grade is required" })}
                                     >
-                                        <option value="">Select a grade</option>
+                                        <option value="">Оберіть об'єкт для роботи</option>
                                         <option value="5th">5th</option>
                                         <option value="6th">6th</option>
-                                        <option value="7th">7th</option>
-                                        {grades.map((grade, index) => (
-                                            <option key={grade.id} value={grade.grade}>
-                                                {grade.grade}
-                                            </option>
-                                        ))}
+                                        <option value="7th">7th</option>   
                                     </select>
 
 
