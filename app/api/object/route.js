@@ -24,11 +24,14 @@ export async function GET(req){
         // Отримання даних з таблиці OBJECTS
         const result = await db
           .select({
+            id: OBJECTS.id,
             name: OBJECTS.name,
             objectName: OBJECTS.name, // Перейменування поля
+            address: OBJECTS.address,
+            contact: OBJECTS.contact,
           })
           .from(OBJECTS)
-          .limit(7); // Лімітуємо результат до 7 записів
+         // .limit(7); // Лімітуємо результат до 7 записів
     
         // Повернення результату у форматі JSON
         return NextResponse.json(result);

@@ -2,23 +2,23 @@
 import React, { useEffect, useState } from 'react'
 import GlobalApi from '../_services/GlobalApi';
 
-function GradeSelect({selectedGrade}) {
+function ObjectSelect({selectedObject}) {
 
-    const [grades, setGrades] = useState([]);
+    const [object, setObject] = useState([]);
     useEffect(() => {
-        GetAllGradesList();
+        GetAllObjectsList();
     }, []);
 
-    const GetAllGradesList = () => {
-        GlobalApi.GetAllGrades().then(resp => {
-            setGrades(resp.data);
+    const GetAllObjectsList = () => {
+        GlobalApi.GetObjects().then(resp => {
+            setObject(resp.data);
         })
     };
 
     return (
         <div>
             <select className='p-2 border rounded-lg'
-            onChange={(e)=>selectedGrade(e.target.value)}
+            onChange={(e)=>selectedObject(e.target.value)}
             >
                 <option value="">Select a grade</option>
                 <option value="5th">5th</option>
@@ -29,4 +29,4 @@ function GradeSelect({selectedGrade}) {
     )
 }
 
-export default GradeSelect
+export default ObjectSelect

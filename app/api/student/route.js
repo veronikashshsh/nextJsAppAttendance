@@ -9,7 +9,7 @@ try {
 
     const result=await db.insert(STUDENTS).values({
         name:data?.name,
-        grade:data?.grade,
+        object:data?.object,
         address:data?.address,
         contact:data?.contact
     })

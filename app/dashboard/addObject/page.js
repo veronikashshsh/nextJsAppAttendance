@@ -19,9 +19,9 @@ function Object() {
 
   return (
     <div> <h2 className='font-bold text-2xl flex justify-between items-center'>addObject
-    <AddNewObject/>
+    <AddNewObject refreshData={GetAllObjects}/>
     </h2>
-      <ObjectListTable objectList={ObjectList}/>
+      <ObjectListTable objectList={ObjectList} refreshData={GetAllObjects}/>
     </div>
   )
 }

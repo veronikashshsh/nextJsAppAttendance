@@ -15,7 +15,7 @@ import { toast } from 'sonner';
 import { Loader2Icon } from 'lucide-react';
 
 
-function AddNewObject() {
+function AddNewObject({refreshData}) {
     const [open, setOpen] = useState(false);
     const [objects, setObjects] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -27,13 +27,18 @@ function AddNewObject() {
             formState: { errors },
         } = useForm();
 
+        useEffect(() => {
+                GetAllObjects();
+            }, []);
+
     const GetAllObjects = async () => {
             setLoadingObjects(true);
             try {
                 const resp = await GlobalApi.GetObjects();
                 setObjects(resp.data);
             } catch (error) {
-                toast.error("Failed to fetch grades");
+                toast.error("Failed to fetch objects");
+                console.log(error);
             } finally {
                 setLoadingObjects(false);
             }
@@ -42,7 +47,7 @@ function AddNewObject() {
          const onSubmit = async (data) => {
                 setLoading(true);
                 try {
-                    const resp = await GlobalApi.CreateNewObject(data);
+                    const resp = await GlobalApi.AddObject(data);
                     if (resp.data) {
                         reset();
                         refreshData();
@@ -50,7 +55,8 @@ function AddNewObject() {
                         toast('New Object Added');
                     }
                 } catch (error) {
-                    toast.error("Failed to add new student");
+                    toast.error("Failed to add new object");
+                    console.log(error);
                 } finally {
                     setLoading(false);
                 }
