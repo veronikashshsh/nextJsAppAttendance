@@ -13,12 +13,14 @@ import { useForm } from 'react-hook-form';
 import GlobalApi from '@/app/_services/GlobalApi';
 import { toast } from 'sonner';
 import { Loader2Icon } from 'lucide-react';
+import { OBJECTS } from '@/utilis/schema';
 
 function AddNewStudent({refreshData}) {
     const [open, setOpen] = useState(false);
-    const [grades, setGrades] = useState([]);
+    const [objects, setObjects] = useState([]);
+    const [selectedObject, setSelectedObject] = useState("");
     const [loading, setLoading] = useState(false);
-    const [loadingGrades, setLoadingGrades] = useState(false); // For loading state of grades
+    const [loadingObjects, setLoadingObjects] = useState(false); // For loading state of grades
     const {
         register,
         handleSubmit,
@@ -27,19 +29,33 @@ function AddNewStudent({refreshData}) {
     } = useForm();
 
     useEffect(() => {
-        GetAllGradesList();
+        GetAllObjectsList();
+    }, []);
+
+    useEffect(() => {
+        const fetchObjects = async () => {
+            try {
+                const response = await fetch("/api/object");
+                const data = await response.json();
+                setObjects(data);
+            } catch (error) {
+                console.error("Error fetching objects:", error);
+            }
+        };
+
+        fetchObjects();
     }, []);
     
 
-    const GetAllGradesList = async () => {
-        setLoadingGrades(true);
+    const GetAllObjectsList = async () => {
+        setLoadingObjects(true);
         try {
-            const resp = await GlobalApi.GetAllGrades();
-            setGrades(resp.data);
+            const resp = await GlobalApi.GetObjects();
+            setObjects(resp.data);
         } catch (error) {
-            toast.error("Failed to fetch grades");
+            toast.error("Failed to fetch objects");
         } finally {
-            setLoadingGrades(false);
+            setLoadingObjects(false);
         }
     };
 
@@ -79,23 +95,36 @@ function AddNewStudent({refreshData}) {
                                 {errors.name && <span className="text-red-500">{errors.name.message}</span>}
                             </div>
                             <div className="flex flex-col py-2">
-                                <label>Select Grade</label>
-                                {loadingGrades ? (
-                                    <p>Loading grades...</p>
+                                <label>Select Object</label>
+                                {loadingObjects ? (
+                                    <p>Loading objects...</p>
                                 ) : (
-                                    <select
-                                        className="p-3 border rounded-lg"
-                                        {...register('grade', { required: "Grade is required" })}
-                                    >
-                                        <option value="">Оберіть об'єкт для роботи</option>
-                                        <option value="5th">5th</option>
-                                        <option value="6th">6th</option>
-                                        <option value="7th">7th</option>   
-                                    </select>
+                                   
+                                    /*<select
+                                    className="p-3 border rounded-lg"
+                                    {...register('object', { required: true })} // Реєструємо обране значення
+                                >
+                                     <option value="">Оберіть об'єкт для роботи</option>
+                        {objects.map((name) => (
+                            <option key={OBJECTS} value={OBJECTS.name}>{OBJECTS.name}</option>
+                                    ))}
+                                </select>*/
 
+                                <select  className="p-3 border rounded-lg" {...register('object', { required: true })}
+                                id="objectSelector"
+                                value={selectedObject}
+                                onChange={(e) => setSelectedObject(e.target.value)}
+                            >
+                                <option value="">Оберіть об'єкт</option>
+                                {objects.map((object) => (
+                                    <option key={object.id} value={object.name}>
+                                        {object.name}
+                                    </option>
+                                ))}
+                            </select>
 
                                 )}
-                                {errors.grade && <span className="text-red-500">{errors.grade.message}</span>}
+                                {errors.object && <span className="text-red-500">{errors.object.message}</span>}
                             </div>
                             <div className="py-3">
                                 <label>Contact Number</label>
