@@ -1,0 +1,22 @@
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Adjust the gap between cards as needed */
+}
+
+.card {
+    background-color: #f9f9f9; /* Background color for the card */
+    border: 1px solid #ddd; /* Border for the card */
+    border-radius: 8px; /* Rounded corners */
+    padding: 16px; /* Padding inside the card */
+    width: calc(33.333% - 32px); /* Adjust the width of the card */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow for the card */
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+.card ul {
+    padding-left: 20px; /* Indentation for the list */
+}
