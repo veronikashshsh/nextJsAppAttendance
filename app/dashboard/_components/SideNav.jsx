@@ -37,6 +37,12 @@ function SideNav() {  // Component name should start with a capital letter
         },
         {
             id: 5, 
+            name: "Об'єкти", 
+            icon: HomeIcon, 
+            path: '/dashboard/objectsReview',
+        },
+        {
+            id: 6, 
             name: 'Налаштування', 
             icon: Settings, 
             path: '/dashboard/settings',

@@ -1,5 +1,6 @@
 import { db } from "@/utilis";
 import { OBJECTS } from "@/utilis/schema";
+import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function POST(req){
@@ -39,5 +40,15 @@ export async function GET(req){
         console.error('Error fetching objects:', error);
         return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
       }
+}
+
+export async function DELETE(req){
+    const searchParams=req.nextUrl.searchParams;
+    const id=searchParams.get('id');
+
+    const result=await db.delete(OBJECTS)
+    .where(eq(OBJECTS.id,id));
+
+    return NextResponse.json(result);
 }
 
